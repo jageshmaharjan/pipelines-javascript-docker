@@ -30,16 +30,22 @@ stages:
     pool:
       vmImage: $(vmImageName)
     steps:
-    - task: Docker@2
-      displayName: Build and push an image to container registry
+    - task: DockerCompose@0
       inputs:
-        command: buildAndPush
-        repository: $(imageRepository)
-        dockerfile: $(dockerfilePath)
-        containerRegistry: $(dockerRegistryServiceConnection)
-        tags: |
-          $(tag)
-          
+        containerregistrytype: 'Azure Container Registry'
+        azureSubscription: 'Pay-As-You-Go(732b4875-f4bc-4972-8623-f53ad66418ed)'
+        azureContainerRegistry: '{"loginServer":"delvifycontainerregistry.azurecr.io", "id" : "/subscriptions/732b4875-f4bc-4972-8623-f53ad66418ed/resourceGroups/myapp-rg/providers/Microsoft.ContainerRegistry/registries/delvifycontainerregistry"}'
+        dockerComposeFile: '**/docker-compose.yml'
+        action: 'Build services'
+
+    - task: DockerCompose@0
+      inputs:
+        containerregistrytype: 'Azure Container Registry'
+        azureSubscription: 'Pay-As-You-Go(732b4875-f4bc-4972-8623-f53ad66418ed)'
+        azureContainerRegistry: '{"loginServer":"delvifycontainerregistry.azurecr.io", "id" : "/subscriptions/732b4875-f4bc-4972-8623-f53ad66418ed/resourceGroups/myapp-rg/providers/Microsoft.ContainerRegistry/registries/delvifycontainerregistry"}'
+        dockerComposeFile: '**/docker-compose.yml'
+        action: 'Push services'
+              
     - upload: manifests
       artifact: manifests
 
