@@ -1,4 +1,4 @@
-
+/***
 'use strict';
 
 const express = require('express');
@@ -13,9 +13,9 @@ app.get('/', (req, res) => {
 
 app.listen(PORT, HOST);
 console.log(`Running on http://${HOST}:${PORT}`);
+***/
 
 
-/**
 const express = require('express');
 const app = express();
 const router = express.Router();
@@ -42,4 +42,4 @@ app.use('/', router);
 app.listen(port, function () {
   console.log('Example app listening on port 8080!')
 })
-**/
+
