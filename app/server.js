@@ -18,17 +18,25 @@ console.log(`Running on http://${HOST}:${PORT}`);
 const express = require('express');
 const app = express();
 const router = express.Router();
-const db = require('./db');
-const sharks = require('./routes/sharks');
 
 const path = __dirname + '/views/';
-const port = process.env.PORT || 8080;
+const port = 8080;
 
-app.engine('html', require('ejs').renderFile);
-app.set('view engine', 'html');
-app.use(express.urlencoded({ extended: true }));
+router.use(function (req,res,next) {
+  console.log('/' + req.method);
+  next();
+});
+
+router.get('/', function(req,res){
+  res.sendFile(path + 'index.html');
+});
+
+router.get('/sharks', function(req,res){
+  res.sendFile(path + 'sharks.html');
+});
+
 app.use(express.static(path));
-app.use('/sharks', sharks);
+app.use('/', router);
 
 app.listen(port, function () {
   console.log('Example app listening on port 8080!')
