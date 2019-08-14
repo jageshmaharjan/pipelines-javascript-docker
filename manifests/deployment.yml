@@ -1,0 +1,16 @@
+apiVersion : apps/v1beta1
+kind: Deployment
+metadata:
+  name: jageshmaharjanpipelinesjavascriptdocker 
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: jageshmaharjanpipelinesjavascriptdocker 
+    spec:
+      containers:
+        - name: jageshmaharjanpipelinesjavascriptdocker 
+          image: delvifycontainerregistry.azurecr.io/jageshmaharjanpipelinesjavascriptdocker 
+          ports:
+          - containerPort: 8080
